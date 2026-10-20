@@ -117,7 +117,7 @@ def send_budget_alert_email(
     period_line = f" Period: {period}\n" if period else ""
     text = (
         f'Budget "{budget_name}" in workspace "{workspace_name}" '
-        f"has reached the {threshold_label} threshold.\n\n'
+        f"has reached the {threshold_label} threshold.\n\n"
         f"Spent:  {spent}\n"
         f"Limit:  {limit}\n"
         f"{period_line}\n"
@@ -128,7 +128,7 @@ def send_budget_alert_email(
         f"<strong>{workspace_name}</strong> has reached the "
         f"<strong>{threshold_label}</strong> threshold.</p>"
         f"<p>Spent: <strong>{spent}</strong><br>Limit: <strong>{limit}</strong></p>"
-        +f"<p>Period: {period}</p>" if period else ""
-        +"<p>You can review this budget in the app.</p>"
+        + (f"<p>Period: {period}</p>" if period else "")
+        + "<p>You can review this budget in the app.</p>"
     )
     return send_alert_email(to, subject, text, html)
