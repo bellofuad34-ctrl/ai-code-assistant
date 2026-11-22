@@ -55,6 +55,7 @@ from flask import (
     url_for,
 )
 from flask_login import current_user, login_required
+from sqlalchemy.orm import joinedload
 
 from app.extensions import db
 from app.models import Project, ProjectChatSession, ProjectMessage, User, Workspace, WorkspaceMember
@@ -425,6 +426,7 @@ def api_delete_workspace(workspace_id: int):
 def api_list_members(workspace_id: int):
     members = (
         WorkspaceMember.query.filter_by(workspace_id=workspace_id, status=STATUS_ACTIVE)
+        .options(joinedload(WorkspaceMember.user))
         .order_by(WorkspaceMember.joined_at)
         .all()
     )

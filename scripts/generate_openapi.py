@@ -66,7 +66,10 @@ def build_document(app) -> dict:
             continue
         path = openapi_path(rule.rule)
         parameters = _parameters(rule.rule)
-        for method in sorted(rule.methods & HTTP_METHODS):
+        methods = sorted(
+            method.lower() for method in rule.methods if method.lower() in HTTP_METHODS
+        )
+        for method in methods:
             operation = {
                 "operationId": _operation_id(method, rule.endpoint, path),
                 "tags": [path.strip("/").split("/")[0] or "api"],
